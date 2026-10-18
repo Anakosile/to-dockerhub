@@ -1,10 +1,27 @@
 name: Docker Practice
 on:
-  push: legend
+  push: 
+    branches:
+      -  legend
 
 jobs:
   Do-task-job:
     name: Login to dockerhub, build image push there and curl the image for response
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo 
+        uses: actions/checkout@v6.1.0
+      - name: Login to dockerhub
+        run: echo "${{ secrets.DOCKER_P }}" | docker login -u ${{ secrets.DOCKER_U }} --password-stdin 
+      - name: Build and push docker image
+        run: |
+          docker build -t myserver:1.0 .
+          docker tag myserver:1.0 anakosile/myserver:1.0
+          docker push anakosile/myserver:1.0
+      - name: Run contianer in runner
+        run: docker run -d -p 3000:5000 --name serverContainer anakosile/myserver:1.0
+      - name: Quick smoke test
+        run: sleep 10
+        run: curl localhost:3000
+
 
