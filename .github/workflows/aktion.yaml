@@ -1,0 +1,10 @@
+name: Docker Practice
+on:
+  push: legend
+
+jobs:
+  Do-task-job:
+    name: Login to dockerhub, build image push there and curl the image for response
+    runs-on: ubuntu-latest
+    steps:
+
