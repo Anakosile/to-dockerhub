@@ -21,7 +21,8 @@ jobs:
       - name: Run contianer in runner
         run: docker run -d -p 3000:5000 --name serverContainer anakosile/myserver:1.0
       - name: Quick smoke test
-        run: sleep 10
-        run: curl localhost:3000
+        run: | 
+          sleep 10
+          curl localhost:3000
 
 
